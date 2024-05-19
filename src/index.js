@@ -9,9 +9,19 @@ const app = express();
 dotenv.config({
      path: './env'
 });
+
 const port = process.env.PORT || 8000
 
-connectDb();
+connectDb().then(
+     app.listen(port, () => {
+          console.log(`Server is running on port ${port}`);
+     })
+).catch(
+     (err)=>{
+          console.error("Failed to connect to MongoDB!!", err);
+          process.exit(1);
+     }
+)
 
 
 
